@@ -73,6 +73,8 @@
           }
         }
       }
+    }, {
+      "includes": ["views/**/*/index.vue"]
     }]
   }
 }

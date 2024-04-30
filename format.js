@@ -8,6 +8,13 @@ module.exports = {
     return {
       Program() {
         const options = context.options[0]
+        const includes = context.options[1]?.includes || ['views/**/*/index.vue']
+        const filePath = context.getFilename()
+        const filename = filePath.split('/').pop()
+        if (!includes.some(item => {
+          const arr = item.split('/**/*/')
+          return filePath.includes(arr[0]) && filename.endsWith(arr[1].replace(/\*/, ''))
+        })) return
         const sourceCode = context.getSourceCode()
         const ExportDefaultDeclaration = sourceCode.ast?.body?.find(item => item.type === 'ExportDefaultDeclaration')
         const properties = ExportDefaultDeclaration?.declaration?.properties
